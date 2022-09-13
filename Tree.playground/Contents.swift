@@ -13,12 +13,27 @@ class TreeNode {
         self.children = []
     }
     
+    // addChild Methods
     func addChild(_ newChild: TreeNode) {
         children.append(newChild)
     }
     
     func addChild(_ newChildData: String) {
         children.append(TreeNode(data: newChildData))
+    }
+    
+    // removeChild Method
+    func removeChild(_ nodeToRemove: TreeNode) {
+        if children.isEmpty {
+            return
+        } else if children.contains(nodeToRemove) {
+            children.removeAll() {$0 == nodeToRemove}
+            return
+        } else {
+            for child in children {
+                child.removeChild(nodeToRemove)
+            }
+        }
     }
 }
 
@@ -32,37 +47,12 @@ extension TreeNode: Equatable {
 }
 
 
-
-
-// E. A. Poe Family Tree
-var patriarch = TreeNode(data: "David Poe")
-var child1 = TreeNode(data: "John Poe")
-var child2 = TreeNode(data: "William Poe")
-var child3 = TreeNode(data: "George Poe")
-var child4 = TreeNode(data: "David Poe")
-var child5 = TreeNode(data: "Samuel Poe")
-var child6 = TreeNode(data: "Maria Poe (Clemm)")
-var child7 = TreeNode(data: "Elizabeth Poe")
-var grandchild1 = TreeNode(data: "William Poe")
-var grandchild2 = TreeNode(data: "Edgar Allan Poe")
-var grandchild3 = TreeNode(data: "Rosalie Poe")
-var grandchild4 = TreeNode(data: "Henry Clemm")
-var grandchild5 = TreeNode(data: "Virginia Marie Clemm")
-var grandchild6 = TreeNode(data: "Virigina Eliza Clemm")
-patriarch.addChild(child1)
-patriarch.addChild(child2)
-patriarch.addChild(child3)
-patriarch.addChild(child4)
-patriarch.addChild(child5)
-patriarch.addChild(child6)
-patriarch.addChild(child7)
-child4.addChild(grandchild1)
-child4.addChild(grandchild2)
-child4.addChild(grandchild3)
-child6.addChild(grandchild4)
-child6.addChild(grandchild5)
-child6.addChild(grandchild6)
-
-// Add Equatable tests here:
-print(patriarch == child4)
-print(child2 == grandchild1)
+var clifford = TreeNode(data: "Clifford the Big Red Dog")
+var puppy1 = TreeNode(data: "Fido")
+var puppy2 = TreeNode(data: "Max")
+clifford.addChild(puppy1)
+clifford.addChild(puppy2)
+print("Clifford has \(clifford.children.count) children.")
+// Remove Fido Here
+clifford.removeChild(puppy1)
+print("Now Clifford only has \(clifford.children.count) child.")
