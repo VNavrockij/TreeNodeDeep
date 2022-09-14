@@ -37,13 +37,28 @@ class TreeNode {
     }
 }
 
-// Add extension below:
+// Equatable Extension
 extension TreeNode: Equatable {
     static func == (lhs: TreeNode, rhs: TreeNode) -> Bool {
         return lhs.data == rhs.data && lhs.children == rhs.children
     }
-    
-    
+}
+
+// CustomStringConvertible Extension (Add Code Here)
+extension TreeNode: CustomStringConvertible {
+    var description: String {
+        var text = "Data: \(data)\n"
+        text += "  # of children: \(children.count)\n"
+        if !children.isEmpty {
+            text += "   Children: ["
+            for child in children {
+                text += "\(child.data), "
+            }
+            text.removeLast(2)
+            text += "]"
+        }
+        return text
+    }
 }
 
 
@@ -52,7 +67,4 @@ var puppy1 = TreeNode(data: "Fido")
 var puppy2 = TreeNode(data: "Max")
 clifford.addChild(puppy1)
 clifford.addChild(puppy2)
-print("Clifford has \(clifford.children.count) children.")
-// Remove Fido Here
-clifford.removeChild(puppy1)
-print("Now Clifford only has \(clifford.children.count) child.")
+
